@@ -1,0 +1,14 @@
+CREATE=
+
+all: libthd_CREATE.a
+
+.PHONY: clean
+
+clean:
+	rm -rf *.a *.o *.mod *genmod.o *~
+
+libthd_DOGS.a: $(DOGS)
+	ar rcs $@ $^ && mv $@ ../libs && cp *.mod ../include
+
+%.o: %.f90
+	${F90} ${FFLAGS} -c $< -I../include
