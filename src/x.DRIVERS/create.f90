@@ -63,10 +63,10 @@
 !       use M_Hubbard_Harris
 
 ! /DOGS
-!       use M_dipole_z
-!       use M_vna_DOGS
-!       use M_vxc_DOGS
-!       use M_Hubbard_DOGS
+       use M_dipole_z
+       use M_vna_DOGS
+       use M_vxc_DOGS
+!      use M_Hubbard_DOGS
 
 ! /NAC
         use M_Goverlap
@@ -79,7 +79,7 @@
 !       use M_xc3c
 
 ! /DOGS 3C
-!       use M_bcna_3c_DOGS
+        use M_bcna_3c_DOGS
 
         implicit none
 
@@ -161,9 +161,9 @@
         call initialize_vxc_Harris
 
 ! Initialize two-center DOGS routines
-!        call initialize_dipole_z
-!        call initialize_vna_DOGS
-!        call initialize_vxc_DOGS
+        call initialize_dipole_z
+        call initialize_vna_DOGS
+        call initialize_vxc_DOGS
 
 ! Initialize interactions for short-range (double-counting) corrections
         call initialize_Coulomb
@@ -182,9 +182,9 @@
         call vxc_Harris
 
 ! Calculate the two-center DOGS interactions:
-!        call dipole_z
-!        call vna_DOGS
-!        call vxc_DOGS
+        call dipole_z
+        call vna_DOGS
+        call vxc_DOGS
 
 ! Calculate interactions for short-range (double-counting) corrections:
         call Coulomb
@@ -229,7 +229,7 @@
         call initialize_bcna_3c_Harris
 
 ! Initialize three-center DOGS routines
-!        call initialize_bcna_3c_DOGS
+        call initialize_bcna_3c_DOGS
 
 ! Allocate two-center array sizes
         call size_Fdata_3c
@@ -240,7 +240,7 @@
         call bcna_3c_Harris
 
 ! Now calculate the three-center DOGS interactions:
-!        call bcna_3c_DOGS
+        call bcna_3c_DOGS
 
 ! Write out the number of interactions
         do ispecies = 1, nspecies
