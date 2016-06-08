@@ -1,4 +1,4 @@
-CREATE=M_bcna_3c_DOGS.o M_bcna_3c_Harris.o M_vna_DOGS.o M_vna_Harris.o M_vnl_KB.o
+CREATE=M_vna_Harris.o M_vna_DOGS.o M_bcna_3c_Harris.o M_bcna_3c_DOGS.o M_Goverlap.o M_rho_2c_McWEDA_Harris.o M_rho_3c_McWEDA_Harris.o M_rhoS_2c_McWEDA_Harris.o M_rhoS_3c_McWEDA_Harris.o  M_vnl_KB.o
 
 all: libthd_CREATE.a
 
