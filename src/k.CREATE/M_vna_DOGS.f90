@@ -1,6 +1,6 @@
 ! copyright info:
 !
-!                             @Copyright 2009
+!                             @Copyright 2016
 !                           Fireball Committee
 ! West Virginia University - James P. Lewis, Chair
 ! Arizona State University - Otto F. Sankey
@@ -154,31 +154,34 @@
 ! ===========================================================================
 ! None
 
-! ===========================================================================
 ! Argument Declaration and Description
+! ===========================================================================
 ! None
 
 ! Variable Declaration and Description
 ! ===========================================================================
-! None
+        integer logfile                     !< writing to which unit
 
 ! Procedure
 ! ===========================================================================
-        write (*,*)
-        write (*,*) ' ******************************************************* '
-        write (*,*) '        C H A R G E D   A T O M    H A R T R E E         '
-        write (*,*) '                  I N T E R A C T I O N S                '
-        write (*,*) ' ******************************************************* '
-        write (*,*)
-        write (*,*) ' Calling Ontop Left case. '
+! Initialize logfile
+        logfile = 21
+
+        write (logfile,*)
+        write (logfile,*) ' ******************************************************* '
+        write (logfile,*) '        C H A R G E D   A T O M    H A R T R E E         '
+        write (logfile,*) '                  I N T E R A C T I O N S                '
+        write (logfile,*) ' ******************************************************* '
+        write (logfile,*)
+        write (logfile,*) ' Calling Ontop Left case. '
         call vna_ontopL_DOGS
 
-        write (*,*)
-        write (*,*) ' Calling Ontop Right case. '
+        write (logfile,*)
+        write (logfile,*) ' Calling Ontop Right case. '
         call vna_ontopR_DOGS
 
-        write (*,*)
-        write (*,*) ' Calling Atom case. '
+        write (logfile,*)
+        write (logfile,*) ' Calling Atom case. '
         call vna_atom_DOGS
 
 ! Deallocate Arrays
@@ -237,6 +240,7 @@
         integer igrid                       !< number of grid points
         integer index_2c, nME2c_max         !< basically the number of non-zero
         integer isorp, ideriv               !< the number of different types
+        integer logfile                     !< writing to which unit
         integer nFdata_cell_2c              !< indexing of interactions
 
         real dmax                           !< max distance between two centers
@@ -256,6 +260,9 @@
 
 ! Procedure
 ! ============================================================================
+! Initialize logfile
+        logfile = 21
+
 ! Assign values to the unrequired variables for this specific interaction.
         ideriv = 999
 
@@ -318,7 +325,7 @@
 
 ! Loop over grid
               d = -drr
-              write (*,200) species(ispecies)%nZ, species(jspecies)%nZ, isorp
+              write (logfile,200) species(ispecies)%nZ, species(jspecies)%nZ, isorp
               do igrid = 1, ndd_vna
                 d = d + drr
 
@@ -335,7 +342,7 @@
                 ! Write out details.
                 write (11,*) (pFdata_cell%fofx(index_2c),                    &
 	 &                                         index_2c = 1, nME2c_max)
-              end do !igrid
+              end do ! igrid
               write (11,*)
             end do ! isorp
           end do ! jspecies
@@ -399,6 +406,7 @@
         integer igrid                       !< number of grid points
         integer index_2c, nME2c_max         !< basically the number of non-zero
         integer isorp, ideriv               !< the number of different types
+        integer logfile                     !< writing to which unit
         integer nFdata_cell_2c              !< indexing of interactions
 
         real dmax                           !< max distance between two centers
@@ -418,6 +426,9 @@
 
 ! Procedure
 ! ============================================================================
+! Initialize logfile
+        logfile = 21
+
 ! Assign values to the unrequired variables for this specific interaction.
         ideriv = 999
 
@@ -480,7 +491,7 @@
 
 ! Loop over grid
               d = -drr
-              write (*,200) species(ispecies)%nZ, species(jspecies)%nZ, isorp
+              write (logfile,200) species(ispecies)%nZ, species(jspecies)%nZ, isorp
               do igrid = 1, ndd_vna
                 d = d + drr
 
@@ -561,6 +572,7 @@
         integer igrid                       !< number of grid points
         integer index_2c, nME2c_max         !< basically the number of non-zero
         integer isorp, ideriv               !< the number of different types
+        integer logfile                     !< writing to which unit
         integer nFdata_cell_2c              !< indexing of interactions
 
         real dmax                           !< max distance between two centers
@@ -580,6 +592,9 @@
 
 ! Procedure
 ! ============================================================================
+! Initialize logfile
+        logfile = 21
+
 ! Assign values to the unrequired variables for this specific interaction.
         ideriv = 999
 
@@ -643,7 +658,7 @@
 
 ! Loop over grid - first do d = 0.0d0 case, then loop over other distances.
               d = -drr
-              write (*,200) species(ispecies)%nZ, species(jspecies)%nZ, isorp
+              write (logfile,200) species(ispecies)%nZ, species(jspecies)%nZ, isorp
 
               ! d = 0.0d0 case - no smoothing function here.
               d = d + drr

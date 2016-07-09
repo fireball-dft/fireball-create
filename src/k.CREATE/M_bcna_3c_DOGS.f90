@@ -1,6 +1,6 @@
 ! copyright info:
 !
-!                             @Copyright 2013
+!                             @Copyright 2016
 !                           Fireball Committee
 ! West Virginia University - James P. Lewis, Chair
 ! Arizona State University - Otto F. Sankey
@@ -107,8 +107,8 @@
 ! For bcna_3c_DOGS
             do kspecies = 1, nspecies
               pFdata_bundle=>Fdata_bundle_3c(ispecies, jspecies, kspecies)
-              do itheta = 1, P_ntheta
-                do isorp = 1, species(kspecies)%nssh
+              do isorp = 1, species(kspecies)%nssh
+                do itheta = 1, P_ntheta
                   pFdata_bundle%nFdata_cell_3c = pFdata_bundle%nFdata_cell_3c + 1
                 end do
               end do
@@ -159,6 +159,7 @@
         integer isorp                   ! loop over shells
         integer ispmin, ispmax
         integer ispecies, jspecies, kspecies  ! species numbers
+        integer logfile                 !< writing to which unit
         integer nFdata_cell_3c          !< indexing of interactions
 
         real dbc, dna                  ! distances between centers
@@ -180,13 +181,16 @@
 
 ! Procedure
 ! ===========================================================================
-        write (*,*)
-        write (*,*) ' ******************************************************* '
-        write (*,*) '        B O N D   C H A R G E D   A T O M   D O G S      '
-        write (*,*) '                  (B C C A) M A T R I X                  '
-        write (*,*) '                  I N T E R A C T I O N S                '
-        write (*,*) ' ******************************************************* '
-        write (*,*)
+! Initialize logfile
+        logfile = 21
+
+        write (logfile,*)
+        write (logfile,*) ' ******************************************************* '
+        write (logfile,*) '        B O N D   C H A R G E D   A T O M   D O G S      '
+        write (logfile,*) '                  (B C C A) M A T R I X                  '
+        write (logfile,*) '                  I N T E R A C T I O N S                '
+        write (logfile,*) ' ******************************************************* '
+        write (logfile,*)
 
 ! Initialize the Legendre coefficients
         call gleg (ctheta, ctheta_weights, P_ntheta)
@@ -266,9 +270,8 @@
                 end do
               end do
 
-              write (*,200) species(ispecies)%nZ, species(jspecies)%nZ,      &
+              write (logfile,200) species(ispecies)%nZ, species(jspecies)%nZ,&
      &                      species(kspecies)%nZ
-
 
 ! Open all the output files.
               iounit = 12

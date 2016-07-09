@@ -1,6 +1,6 @@
 ! copyright info:
 !
-!                             @Copyright 2013
+!                             @Copyright 2016
 !                           Fireball Committee
 ! West Virginia University - James P. Lewis, Chair
 ! Arizona State University - Otto F. Sankey
@@ -163,6 +163,7 @@
         integer isorp, ideriv           ! loop over shells
         integer ispmin, ispmax
         integer ispecies, jspecies, kspecies  ! species numbers
+        integer logfile                 !< writing to which unit
         integer nFdata_cell_3c          !< indexing of interactions
 
         real dbc, dna                  ! distances between centers
@@ -192,12 +193,15 @@
 
 ! Procedure
 ! ===========================================================================
-        write (*,*)
-        write (*,*) ' ******************************************************* '
-        write (*,*) '      S P H E R I C A L   D E N S I T Y    M A T R I X   '
-        write (*,*) '                 I N T E R A C T I O N S                 '
-        write (*,*) ' ******************************************************* '
-        write (*,*)
+! Initialize logfile
+        logfile = 21
+
+        write (logfile,*)
+        write (logfile,*) ' ******************************************************* '
+        write (logfile,*) '      S P H E R I C A L   D E N S I T Y    M A T R I X   '
+        write (logfile,*) '                 I N T E R A C T I O N S                 '
+        write (logfile,*) ' ******************************************************* '
+        write (logfile,*)
 
 ! Initialize the Legendre coefficients
         call gleg (ctheta, ctheta_weights, P_ntheta)
@@ -285,13 +289,13 @@
                 end do
               end do
 
-              write (*,200) species(ispecies)%nZ, species(jspecies)%nZ,      &
-     &                      species(kspecies)%nZ
+              write (logfile,200) species(ispecies)%nZ, species(jspecies)%nZ,&
+     &                            species(kspecies)%nZ
 
 ! Open all the output files.
               iounit = 12
-              do itheta = 1, P_ntheta
-                do isorp = ispmin, ispmax
+              do isorp = ispmin, ispmax
+                do itheta = 1, P_ntheta
                   iounit = iounit + 1
                   write (filename, '("/", "rhoS_3c_", i2.2, "_", i2.2, ".",  &
      &                               i2.2, ".", i2.2, ".", i2.2, ".dat")')   &
@@ -368,8 +372,8 @@
 
               ! close files
               iounit = 12
-              do itheta = 1, P_ntheta
-                do isorp = ispmin, ispmax
+              do isorp = ispmin, ispmax
+                do itheta = 1, P_ntheta
                   iounit = iounit + 1
                   close (unit = iounit)
                 end do

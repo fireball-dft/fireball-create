@@ -1,6 +1,6 @@
 ! copyright info:
 !
-!                             @Copyright 2009
+!                             @Copyright 2016
 !                           Fireball Committee
 ! West Virginia University - James P. Lewis, Chair
 ! Arizona State University - Otto F. Sankey
@@ -157,39 +157,42 @@
         subroutine rhoS_2c_Harris
         implicit none
 
-! Argument Declaration and Description
+! Parameters and Data Declaration
 ! ===========================================================================
 ! None
 
-! Parameters and Data Declaration
+! Argument Declaration and Description
 ! ===========================================================================
 ! None
 
 ! Variable Declaration and Description
 ! ===========================================================================
-! None
+        integer logfile                     !< writing to which unit
 
 ! Procedure
 ! ===========================================================================
-        write (*,*)
-        write (*,*) ' ******************************************************* '
-        write (*,*) ' S P H E R I C A L L Y   A V E R A G E D   D E N S I T Y '
-        write (*,*) '                  I N T E R A C T I O N S                '
-        write (*,*) ' ******************************************************* '
-        write (*,*)
-        write (*,*) ' Calling overlap case. '
+! Initialize logfile
+        logfile = 21
+
+        write (logfile,*)
+        write (logfile,*) ' ******************************************************* '
+        write (logfile,*) ' S P H E R I C A L L Y   A V E R A G E D   D E N S I T Y '
+        write (logfile,*) '                  I N T E R A C T I O N S                '
+        write (logfile,*) ' ******************************************************* '
+        write (logfile,*)
+        write (logfile,*) ' Calling overlap case. '
         call overlapS
 
-        write (*,*)
-        write (*,*) ' Calling ontop left case. '
+        write (logfile,*)
+        write (logfile,*) ' Calling ontop left case. '
         call rhoS_ontopL_Harris
 
-        write (*,*)
-        write (*,*) ' Calling ontop right case. '
+        write (logfile,*)
+        write (logfile,*) ' Calling ontop right case. '
         call rhoS_ontopR_Harris
 
-        write (*,*)
-        write (*,*) ' Calling atom case. '
+        write (logfile,*)
+        write (logfile,*) ' Calling atom case. '
         call rhoS_atom_Harris
 
 ! Format Statements
@@ -245,6 +248,7 @@
         integer igrid                       !< number of grid points
         integer index_2c, nME2c_max         !< basically the number of non-zero
         integer isorp, ideriv               !< the number of different types
+        integer logfile                     !< writing to which unit
         integer nFdata_cell_2c              !< indexing of interactions
 
         real dmax                           !< max distance between two centers
@@ -265,6 +269,9 @@
 
 ! Procedure
 ! ============================================================================
+! Initialize logfile
+        logfile = 21
+
 ! Assign values to the unrequired variables for this specific interaction.
         ideriv = 999
 
@@ -328,7 +335,7 @@
      &                    index_2c = 1, nME2c_max)
 
 ! Loop over grid
-            write (*,200) species(ispecies)%nZ, species(jspecies)%nZ
+            write (logfile,200) species(ispecies)%nZ, species(jspecies)%nZ
              do igrid = 1, ndd_rho
               d = d + drr
 
@@ -523,6 +530,7 @@
         integer index_2c, nME2c_max         !< basically the number of non-zero
         integer index_2c_overlapS           !< where overlapS starts
         integer isorp, ideriv               !< the number of different types
+        integer logfile                     !< writing to which unit
         integer nFdata_cell_2c              !< indexing of interactions
 
         real dmax                           !< max distance between two centers
@@ -544,6 +552,9 @@
 
 ! Procedure
 ! ============================================================================
+! Initialize logfile
+        logfile = 21
+
 ! Assign values to the unrequired variables for this specific interaction.
         ideriv = 999
 
@@ -608,7 +619,7 @@
 
 ! Loop over grid
               d = -drr
-              write (*,200) species(ispecies)%nZ, species(jspecies)%nZ
+              write (logfile,200) species(ispecies)%nZ, species(jspecies)%nZ
               do igrid = 1, ndd_rho
                 d = d + drr
 
@@ -815,6 +826,7 @@
         integer index_2c, nME2c_max         !< basically the number of non-zero
         integer index_2c_overlapS           !< where overlapS starts
         integer isorp, ideriv               !< the number of different types
+        integer logfile                     !< writing to which unit
         integer nFdata_cell_2c              !< indexing of interactions
 
         real dmax                           !< max distance between two centers
@@ -836,6 +848,9 @@
 
 ! Procedure
 ! ============================================================================
+! Initialize logfile
+        logfile = 21
+
 ! Assign values to the unrequired variables for this specific interaction.
         ideriv = 999
 
@@ -899,7 +914,7 @@
 
 ! Loop over grid
               d = -drr
-              write (*,200) species(ispecies)%nZ, species(jspecies)%nZ
+              write (logfile,200) species(ispecies)%nZ, species(jspecies)%nZ
               do igrid = 1, ndd_rho
                 d = d + drr
 
@@ -1106,6 +1121,7 @@
         integer index_2c, nME2c_max         !< basically the number of non-zero
         integer index_2c_overlapS           !< where overlapS starts
         integer isorp, ideriv               !< the number of different types
+        integer logfile                     !< writing to which unit
         integer nFdata_cell_2c              !< indexing of interactions
 
         real dmax                           !< max distance between two centers
@@ -1128,6 +1144,9 @@
 
 ! Procedure
 ! ============================================================================
+! Initialize logfile
+        logfile = 21
+
 ! Assign values to the unrequired variables for this specific interaction.
         ideriv = 999
 
@@ -1211,7 +1230,7 @@
 
 ! Loop over remaining grid
               d = -drr
-              write (*,200) species(ispecies)%nZ, species(jspecies)%nZ
+              write (logfile,200) species(ispecies)%nZ, species(jspecies)%nZ
               do igrid = 1, ndd_rho
                 d = d + drr
 

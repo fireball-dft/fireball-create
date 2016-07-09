@@ -1,6 +1,6 @@
 ! copyright info:
 !
-!                             @Copyright 2013
+!                             @Copyright 2016
 !                           Fireball Committee
 ! West Virginia University - James P. Lewis, Chair
 ! Arizona State University - Otto F. Sankey
@@ -92,7 +92,7 @@
 ! Variable Declaration and Description
 ! ===========================================================================
         integer ispecies, jspecies, kspecies !< counters for number of species
-!        integer isorp                        !< counter for shells
+!       integer isorp                        !< counter for shells
         integer itheta                       !< counter for theta
 
         type (T_Fdata_bundle_3c), pointer :: pFdata_bundle
@@ -158,6 +158,7 @@
 !       integer isuperloop              ! counter over species**3 - parallel
         integer ispecies, jspecies, kspecies  ! species numbers
 !       integer itemp                   ! used to find species values
+        integer logfile                 !< writing to which unit
         integer nFdata_cell_3c          !< indexing of interactions
 
 ! MPI
@@ -183,13 +184,16 @@
 
 ! Procedure
 ! ===========================================================================
-        write (*,*)
-        write (*,*) ' ******************************************************* '
-        write (*,*) '     B O N D   C H A R G E   N E U T R A L   A T O M     '
-        write (*,*) '                  (B C N A) M A T R I X                  '
-        write (*,*) '                  I N T E R A C T I O N S                '
-        write (*,*) ' ******************************************************* '
-        write (*,*)
+! Initialize logfile
+        logfile = 21
+
+        write (logfile,*)
+        write (logfile,*) ' ******************************************************* '
+        write (logfile,*) '     B O N D   C H A R G E   N E U T R A L   A T O M     '
+        write (logfile,*) '                  (B C N A) M A T R I X                  '
+        write (logfile,*) '                  I N T E R A C T I O N S                '
+        write (logfile,*) ' ******************************************************* '
+        write (logfile,*)
 
 ! Initialize the Legendre coefficients
         call gleg (ctheta, ctheta_weights, P_ntheta)
@@ -284,8 +288,8 @@
      &                                                  index_3c = 1, nME3c_max)
               end do
 
-              write (*,200) species(ispecies)%nZ, species(jspecies)%nZ,      &
-     &                      species(kspecies)%nZ
+              write (logfile,200) species(ispecies)%nZ, species(jspecies)%nZ,&
+     &                            species(kspecies)%nZ
 
 ! Open all the output files.
               iounit = 12
@@ -490,7 +494,8 @@
           r3 = sqrt((xr - rna(1))**2 + (yr - rna(2))**2 + (zr - rna(3))**2)
 
           do isorp = ispmin, ispmax
-            vpot = vnaofr (r3, kspecies, isorp)/(4.0*pi)
+!           vpot = vnaofr (r3, kspecies, isorp)/(4.0*pi)
+            vpot = vnaofr (r3, kspecies, isorp)
 
             prod = vpot*phimult(iphi)
             do index_3c = 1, nME3c_max

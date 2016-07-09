@@ -1,6 +1,6 @@
 ! copyright info:
 !
-!                             @Copyright 2012
+!                             @Copyright 2016
 !                           Fireball Committee
 ! West Virginia University - James P. Lewis, Chair
 ! Arizona State University - Otto F. Sankey
@@ -164,14 +164,12 @@
 
 ! Variable Declaration and Description
 ! ===========================================================================
-        integer ispecies           !< counters for number of species
+        integer ispecies                    !< counters for number of species
         integer issh, jssh
         integer index_1c, nME1c_max         !< basically the number of non-zero
         integer isorp, ideriv               !< the number of different types
+        integer logfile                     !< writing to which unit
         integer nFdata_cell_1c              !< indexing of interactions
-!        integer n1,l1,m1
-!        integer n2,l2,m2
-
 
         real d                              !< distance between the two centers
         real rcutoff1              !< cutoffs for one centers
@@ -183,16 +181,16 @@
         type (T_Fdata_bundle_2c), pointer :: pFdata_bundle
 
         character (len = 30) filename
-!        character (len = 25) interactions
-
-!        logical skip
 
 ! Procedure
 ! ============================================================================
-        write (*,*)
-        write (*,*) ' ******************************************************* '
-        write (*,*) '        G O V E R L A P   I N T E R A C T I O N S        '
-        write (*,*) ' ******************************************************* '
+! Initialize logfile
+        logfile = 21
+
+        write (logfile,*)
+        write (logfile,*) ' ******************************************************* '
+        write (logfile,*) '        G O V E R L A P   I N T E R A C T I O N S        '
+        write (logfile,*) ' ******************************************************* '
 
 ! Assign values to the unrequired variables for this specific interaction.
         ideriv = 999
@@ -235,7 +233,7 @@
           rhomax = rcutoff1
 
 ! Loop over grid
-          write (*,100) species(ispecies)%nZ
+          write (logfile,100) species(ispecies)%nZ
           d = 0.0d0
 
           ! Set integration limits
@@ -283,6 +281,7 @@
 ! ===========================================================================
         return
         end subroutine goverlap_L
+
 ! ===========================================================================
 ! Goverlap
 ! ===========================================================================
@@ -330,10 +329,8 @@
         integer issh, jssh
         integer index_1c, nME1c_max         !< basically the number of non-zero
         integer isorp, ideriv               !< the number of different types
+        integer logfile                     !< writing to which unit
         integer nFdata_cell_1c              !< indexing of interactions
-!        integer n1,l1,m1
-!        integer n2,l2,m2
-
 
         real d                              !< distance between the two centers
         real rcutoff1              !< cutoffs for one centers
@@ -345,16 +342,16 @@
         type (T_Fdata_bundle_2c), pointer :: pFdata_bundle
 
         character (len = 30) filename
-!        character (len = 25) interactions
-
-!        logical skip
 
 ! Procedure
 ! ============================================================================
-        write (*,*)
-        write (*,*) ' ******************************************************* '
-        write (*,*) '        G O V E R L A P   I N T E R A C T I O N S        '
-        write (*,*) ' ******************************************************* '
+! Initialize logfile
+        logfile = 21
+
+        write (logfile,*)
+        write (logfile,*) ' ******************************************************* '
+        write (logfile,*) '        G O V E R L A P   I N T E R A C T I O N S        '
+        write (logfile,*) ' ******************************************************* '
 
 ! Assign values to the unrequired variables for this specific interaction.
         ideriv = 999
@@ -397,7 +394,7 @@
           rhomax = rcutoff1
 
 ! Loop over grid
-          write (*,100) species(ispecies)%nZ
+          write (logfile,100) species(ispecies)%nZ
           d = 0.0d0
 
           ! Set integration limits
